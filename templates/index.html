@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dual USB Camera Web Viewer</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; }
+        .container { display: flex; flex-direction: row; justify-content: space-around; width: 100%; }
+        .camera { margin: 10px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Dual USB Camera Web Viewer</h1>
+    <div class="container">
+        <div class="camera">
+            <h2>Camera 1</h2>
+            <img id="cam1" src="{{ url_for('video_feed', id=1) }}" width="640" height="480">
+            <input type="range" id="exposure1" min="1" max="1000" value="10" onchange="setExposure(1, this.value)" />
+            <label for="exposure1">Exposure 1</label>
+        </div>
+        <div class="camera">
+            <h2>Camera 2</h2>
+            <img id="cam2" src="{{ url_for('video_feed', id=2) }}" width="640" height="480">
+            <input type="range" id="exposure2" min="1" max="1000" value="10" onchange="setExposure(2, this.value)" />
+            <label for="exposure2">Exposure 2</label>
+        </div>
+    </div>
+    <script>
+        function setExposure(id, value) {
+            fetch(`/set_exposure/${id}?value=${value}`, { method: 'POST' });
+        }
+    </script>
+</body>
+</html>
